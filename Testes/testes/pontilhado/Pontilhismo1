@@ -1,0 +1,62 @@
+
+Pontilhismo - Processing
+
+
+Eu deveria pegar um exemplo do site http://processing.org/examples/ e modifica-lo para atingir algum objetivo, escolhi o de pontilhismo: http://processing.org/examples/pointillism.html.
+
+O codigo basicamente cria pontos coloridos com cores baseadas na imagem carregada que não é mostrada, eu quis muda-lo para transformar imagens em quadros ou paineis criados soh com pontos, modificacoes necessarias:
+
+– tirei do codigo o tamnho maior de pontos (largePoint) e deixei só o menor para todos os pontos terem o mesmo tamnho.
+
+– alterei o valor do alfa no fill(pix, “100”)  para que os pontos ficassem mais claros e mais proximos do tom da imagem que escolhi para usar no codigo.
+
+– como qualquer quadro em pontilhismo o processo é lento e exige muitos pontos eu queria saber quantos pontos teriam a imagem no final do processo entao coloquei um contador p para me dizer quantos pontos terei ao final do processo, sendo que n soube como fazer para contarem os pontos sobrepostos sem ter muito trabalho =/
+
+– coloquei tbm um contador t para eu saber quantos segundos demoraram para a imagem ficar com uma quantidade de pontos satisfatoria.
+
+– finalmente para eu n ter que esperar tanto coloquei um frameRate(60) para obter o resultado desejado mais rapido.
+
+
+
+
+
+
+Codigo final:
+
+// declaracao das variaveis
+	PImage img;
+	int smallPoint;
+	int p=0;
+
+void setup()
+{
+	//declaracao do tamnho
+	size(750, 750);
+	// img vai receber a imagem da pasta
+	img = loadImage(“bulbassaur.jpg”);
+	//tamnho do ponto, vc pode alterar essa variavel para ter pontos menores ou maiores para um resultado mais complexo ou mais simples com o pontilhismo
+	smallPoint = 5;
+	//tirar a linha de contorno dos pontos
+	noStroke();
+	background(255);
+	frameRate(60);
+}
+
+void draw()
+{
+	//funcao de fazer os pontos em cantos randoms
+	float pointillize = map( 0, 0, width, smallPoint, smallPoint);
+	int x = int(random(img.width));
+	int y = int(random(img.height));
+	color pix = img.get(x, y);
+	fill(pix, 100);
+	ellipse(x, y, pointillize, pointillize);
+	//contador de pontos
+	p++;
+	println(p,”pontos”);
+	//contador de segundos
+	t = (p/60);
+	println(t,”s”);
+}
+
+
